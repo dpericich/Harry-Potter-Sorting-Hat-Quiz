@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import LoadingPage from './LoadingPage';
+import backgroundimage from './hp-background.jpg'
+import QuizPage from './QuizPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {name : "",
+          submit : true,
+          quizStatus : false}
+
+  storeUserName = (e) => {
+    this.setState({name: e.target.value})
+    console.log(this.state.name)
+  }
+
+  submitUserName = () => {
+    this.setState({submit: !(this.state.submit)})
+    console.log(this.state.submit)
+  }
+
+  render(){
+    return (
+      <div>
+        {!this.state.submit && <LoadingPage 
+                                  storeUserName={this.storeUserName} 
+                                  userName={this.name} 
+                                  submitUserName={this.submitUserName}/>}
+        {this.state.submit && !this.state.quizStatus && <QuizPage />}
+      </div>
+    );
+  }
 }
+
 
 export default App;
