@@ -3,11 +3,18 @@ import './App.css';
 import LoadingPage from './LoadingPage';
 import backgroundimage from './hp-background.jpg'
 import QuizPage from './QuizPage';
+import ResultsPage from './ResultsComponents/ResultsPage';
+
+import LoadingPageClean from './LoadingPage/LoadingPageClean'
 
 class App extends React.Component {
   state = {name : "",
-          submit : true,
-          quizStatus : false}
+          isNameSubmitted : false,
+          isQuizComplete : false,
+          questionsAnswered: 0,
+          count : 0,
+          house : "Grffindor",
+        }
 
   storeUserName = (e) => {
     this.setState({name: e.target.value})
@@ -15,18 +22,30 @@ class App extends React.Component {
   }
 
   submitUserName = () => {
-    this.setState({submit: !(this.state.submit)})
-    console.log(this.state.submit)
+    this.setState({isNameSubmitted: true})
+    console.log(this.state.isNameSubmitted)
+  }
+
+  submitQuizAnswers =() => {
+    this.setState({isQuizComplete: true})
+  }
+
+  resetQuiz = () => {
+    this.setState({isNameSubmitted: false})
+    this.setState({isQuizComplete: false})
   }
 
   render(){
     return (
       <div>
-        {!this.state.submit && <LoadingPage 
+        <LoadingPageClean />
+        {!this.state.isNameSubmitted && <LoadingPage 
                                   storeUserName={this.storeUserName} 
                                   userName={this.name} 
                                   submitUserName={this.submitUserName}/>}
-        {this.state.submit && !this.state.quizStatus && <QuizPage />}
+        {this.state.isNameSubmitted && !this.state.isQuizComplete && <QuizPage name={this.state.name} submitQuizAnswers={this.submitQuizAnswers}/>}
+        {this.state.isNameSubmitted && this.state.isQuizComplete && 
+        <ResultsPage name={this.state.name} resetQuiz={this.resetQuiz} house={this.state.house}/>}
       </div>
     );
   }

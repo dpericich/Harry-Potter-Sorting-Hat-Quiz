@@ -10,8 +10,8 @@ const LoadingPage = ({storeUserName, submitUserName, userName}) => {
             <div className="input-field">
                 <div className="name-entrance">
                     <img src="../potion.png" alt="potion" style={textIconStyle}/>
-                    <input style={inputStyle} type="text" placeholder="Enter your Name" value={userName} onChange={storeUserName}/>
-                    <button onClick={submitUserName} style={submitStyle}>Submit</button>
+                    <input style={inputStyle} type="text" placeholder="Enter your Name" value={userName} onChange={storeUserName} required/>
+                    <input type="button" onClick={submitUserName} style={submitStyle} value="Submit" />
                 </div>
             </div>
         </section>
